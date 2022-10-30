@@ -21,6 +21,15 @@ import com.example.kotlinfoodapp.viewModel.HomeViewModel
 class HomeFragment : Fragment() {
     private  lateinit var binding:FragmentHomeBinding
     private  lateinit var homeMvvm:HomeViewModel
+    private lateinit var randomMeal:Meal
+
+    //TODO    companion object kullandık çünkü Kotlin’de Static Properties & Static Function oluşturmamıza izin vermiyor. Static properties oluşturabilmemiz için Companion Object kullanmamız gerekiyor.
+    companion object{
+        const val MEAL_ID="com.example.kotlinfoodapp.fragments.idMeal"
+        const val MEAL_NAME="com.example.kotlinfoodapp.fragments.nameMeal"
+        const val MEAL_THUMB="com.example.kotlinfoodapp.fragments.thumbMeal"
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,15 +57,18 @@ class HomeFragment : Fragment() {
     private fun onRandomMealClicked() {
         binding.imgRandomMealCard.setOnClickListener {
             val intent=Intent(activity,MealActivity::class.java)
+            intent.putExtra(MEAL_ID,randomMeal.idMeal)
+            intent.putExtra(MEAL_NAME,randomMeal.strMeal)
+            intent.putExtra(MEAL_THUMB,randomMeal.strMealThumb)
+
             startActivity(intent)
         }
     }
 
     private fun observeRandomMeal() {
-    homeMvvm.observeRandomMealLiveData().observe(viewLifecycleOwner,object :Observer<Meal>{
-        override fun onChanged(t: Meal?) {
-    Glide.with(this@HomeFragment).load(t!!.strMealThumb).into(binding.imgRandomMeal)
-            }
+    homeMvvm.observeRandomMealLiveData().observe(viewLifecycleOwner,{meal->
+        Glide.with(this).load(meal.strMealThumb).into(binding.imgRandomMeal)
+        this.randomMeal=meal
     })
     }
 }

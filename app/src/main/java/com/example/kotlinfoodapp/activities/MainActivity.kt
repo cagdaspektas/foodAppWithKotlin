@@ -7,7 +7,7 @@ import androidx.navigation.ui.NavigationUI
 import com.example.kotlinfoodapp.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-//TODO 5.video(15.35te kaldın) izlenecek
+//TODO 6.video izlenecek
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

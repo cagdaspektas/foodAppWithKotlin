@@ -38,6 +38,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_add_to_fav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:backgroundTint="@color/accent"
@@ -70,6 +71,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 >
                 <TextView
+                    android:id="@+id/tv_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Category:Beef"
@@ -81,6 +83,7 @@
 
                     />
                 <TextView
+                    android:id="@+id/tv_area"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Area:Turkey"
@@ -110,6 +113,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/tv_instructors_steps"
 
 
                 app:layout_constraintStart_toStartOf="@id/tv_instructors"
@@ -135,6 +139,19 @@
         app:tint="@color/accent"
         android:layout_marginBottom="@dimen/_10sdp"
         />
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progress_bar"
+        android:indeterminate="true"
+        app:layout_anchor="@id/appbar"
+        app:layout_anchorGravity="bottom"
+
+        android:visibility="gone"
+        />
+    <!--  -->
+
+
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
