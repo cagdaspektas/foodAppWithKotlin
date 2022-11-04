@@ -4,10 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.kotlinfoodapp.pojo.CategoryList
-import com.example.kotlinfoodapp.pojo.CategoryMeals
-import com.example.kotlinfoodapp.pojo.Meal
-import com.example.kotlinfoodapp.pojo.MealList
+import com.example.kotlinfoodapp.pojo.*
 import com.example.kotlinfoodapp.retrofit.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
@@ -15,7 +12,8 @@ import retrofit2.Response
 
 class HomeViewModel:ViewModel() {
 private   var randomMealLiveData= MutableLiveData<Meal>()
-    private var popularItemsLiveData=MutableLiveData<List<CategoryMeals>>()
+    private var popularItemsLiveData=MutableLiveData<List<MealsByCategory>>()
+    private var categoryLiveData=MutableLiveData<List<Category>>()
     fun getRandomMeal(){
         RetrofitInstance.api.getRandomMeal().enqueue(object : Callback<MealList> {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
@@ -37,25 +35,43 @@ private   var randomMealLiveData= MutableLiveData<Meal>()
 
 
     fun getPopularItems(){
-        RetrofitInstance.api.getPopularItems("Seafood").enqueue(object :Callback<CategoryList>{
-            override fun onResponse(call: Call<CategoryList>, response: Response<CategoryList>) {
+        RetrofitInstance.api.getPopularItems("Seafood").enqueue(object :Callback<MealsByCategoryList>{
+            override fun onResponse(call: Call<MealsByCategoryList>, response: Response<MealsByCategoryList>) {
                 if (response.body()!=null){
         popularItemsLiveData.value= response.body()!!.meals
                 }
             }
 
-            override fun onFailure(call: Call<CategoryList>, t: Throwable) {
+            override fun onFailure(call: Call<MealsByCategoryList>, t: Throwable) {
                 Log.d("HomeFragment", t.message.toString())
             }
         })
     }
 
+    fun getCategories(){
+        RetrofitInstance.api.getCategories().enqueue(object :Callback<CategoryList>{
+            override fun onResponse(call: Call<CategoryList>, response: Response<CategoryList>) {
+           response.body()?.let {
+               categoryList ->
+               //TODO bu kısım şöylede yazılabilirdi categoryLiveData.value
+               categoryLiveData.postValue(categoryList.categories)
+           }
+            }
+
+            override fun onFailure(call: Call<CategoryList>, t: Throwable) {
+                Log.d("HomeViewModel", t.message.toString())
+            }
+        })
+    }
 
 //TODO live data değişemezken muteabe live data değişebilir burdaki fun amacı private olan MutableLiveDatayı dışarıdan okunmayacak hale getirip sadece bu class içinde değiştirmek
     fun observeRandomMealLiveData():LiveData<Meal>{
         return randomMealLiveData
     }
-    fun observePopularItemsLiveData():LiveData<List<CategoryMeals>>{
+    fun observePopularItemsLiveData():LiveData<List<MealsByCategory>>{
         return popularItemsLiveData
+    }
+    fun observeCategoryLiveData():LiveData<List<Category>>{
+        return  categoryLiveData
     }
 }

@@ -134,6 +134,7 @@ android:layout_marginStart="@dimen/_25sdp"
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/_18sdp"
             android:scrollbars="none"
             android:id="@+id/rec_view_categories"></androidx.recyclerview.widget.RecyclerView>
 
