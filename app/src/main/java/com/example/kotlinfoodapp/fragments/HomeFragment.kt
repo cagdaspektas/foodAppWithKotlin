@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.kotlinfoodapp.activities.CategoryMealsActivity
 import com.example.kotlinfoodapp.activities.MealActivity
 import com.example.kotlinfoodapp.adapter.CategoriesAdapter
 import com.example.kotlinfoodapp.adapter.MostPopularAdapter
@@ -35,6 +36,8 @@ class HomeFragment : Fragment() {
         const val MEAL_ID="com.example.kotlinfoodapp.fragments.idMeal"
         const val MEAL_NAME="com.example.kotlinfoodapp.fragments.nameMeal"
         const val MEAL_THUMB="com.example.kotlinfoodapp.fragments.thumbMeal"
+        const val CATEGORY_NAME="com.example.kotlinfoodapp.fragments.categoryName"
+
 
     }
 
@@ -67,8 +70,17 @@ class HomeFragment : Fragment() {
         prepareCategoriesRecyclerView()
         homeMvvm.getCategories()
         observeCategoriesLiveData()
+        onCategoryClick()
 
 
+    }
+
+    private fun onCategoryClick() {
+        categoriesAdapter.onItemClick={category->
+            val intent=Intent(activity,CategoryMealsActivity::class.java)
+            intent.putExtra(CATEGORY_NAME,category.strCategory)
+            startActivity(intent)
+        }
     }
 
     private fun prepareCategoriesRecyclerView() {
