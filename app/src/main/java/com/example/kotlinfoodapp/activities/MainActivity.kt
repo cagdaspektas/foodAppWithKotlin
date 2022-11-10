@@ -13,7 +13,7 @@ import com.example.kotlinfoodapp.viewModel.HomeViewModelFactory
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-//TODO 9.video izlenecek 8e bak geçmeden
+//TODO 11.
 class MainActivity : AppCompatActivity() {
     val viewModel: HomeViewModel by lazy {
         val mealDataBase= MealDataBase.getInstance(this)
