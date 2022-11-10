@@ -4,9 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.kotlinfoodapp.dao.MealDataBase
 
-class MealViewModelFactory( val mealDataBase: MealDataBase):ViewModelProvider.Factory{
+class HomeViewModelFactory(private var mealDataBase: MealDataBase):ViewModelProvider.Factory {
+
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return MealViewModel(mealDataBase) as T
+        return  HomeViewModel(mealDataBase) as T
     }
 }

@@ -9,7 +9,7 @@ interface MealDao {
 
     //TODO suspend async gibi flutterdaki beklemeye yarıyor
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-   suspend fun upsert(meal:Meal)
+    fun upsert(meal:Meal)
 
   /*
   update bu yönetimide kullanılabilir daha kolayı insert içine eğer zaten varsa o datayı eklemektir o işlemde  @Insert(onConflict = OnConflictStrategy.REPLACE) bu şekilde yapılır
@@ -17,7 +17,7 @@ interface MealDao {
    suspend fun updateMeal(meal:Meal)*/
 
    @Delete
-   suspend fun delete(meal: Meal)
+  fun delete(meal: Meal)
 
    @Query("Select * from mealInformation")
    fun getMeals():LiveData<List<Meal>>

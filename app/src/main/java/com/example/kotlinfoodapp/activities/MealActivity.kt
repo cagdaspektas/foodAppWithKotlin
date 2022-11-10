@@ -34,7 +34,6 @@ class MealActivity : AppCompatActivity() {
         val mealDataBase=MealDataBase.getInstance(this)
         val viewModelFactory=MealViewModelFactory(mealDataBase)
         mealViewModel= ViewModelProvider(this,viewModelFactory)[MealViewModel::class.java]
-        //mealViewModel=ViewModelProvider(this)[MealViewModel::class.java]
         getMealInformationFromIntent()
         setInformationViews()
         loadingCase()
@@ -48,7 +47,7 @@ class MealActivity : AppCompatActivity() {
         binding.btnAddToFav.setOnClickListener {
           mealToSave?.let {
               mealViewModel.insertMeal(it)
-              Toast.makeText(this,"Meal Saved",Toast.LENGTH_SHORT).show()
+              Toast.makeText(this,"Meal Saved",Toast.LENGTH_LONG).show()
           }
         }
     }
