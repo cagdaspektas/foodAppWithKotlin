@@ -2,7 +2,7 @@ package com.example.kotlinfoodapp.dao
 
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
-import java.util.jar.Attributes
+
 
 @TypeConverters
 class MealTypeConverter {

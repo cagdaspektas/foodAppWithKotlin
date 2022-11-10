@@ -4,16 +4,18 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.kotlinfoodapp.dao.MealDataBase
 import com.example.kotlinfoodapp.pojo.*
 import com.example.kotlinfoodapp.retrofit.RetrofitInstance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeViewModel:ViewModel() {
+class HomeViewModel(mealDataBase: MealDataBase) :ViewModel() {
 private   var randomMealLiveData= MutableLiveData<Meal>()
     private var popularItemsLiveData=MutableLiveData<List<MealsByCategory>>()
     private var categoryLiveData=MutableLiveData<List<Category>>()
+   // private var favoritesMealsLiveData=mealDataBase.mealDao().getMeals()
     fun getRandomMeal(){
         RetrofitInstance.api.getRandomMeal().enqueue(object : Callback<MealList> {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
@@ -74,4 +76,7 @@ private   var randomMealLiveData= MutableLiveData<Meal>()
     fun observeCategoryLiveData():LiveData<List<Category>>{
         return  categoryLiveData
     }
+  /* fun observeFavoritesMealsLiveData():LiveData<List<Meal>>{
+        return favoritesMealsLiveData
+    }*/
 }

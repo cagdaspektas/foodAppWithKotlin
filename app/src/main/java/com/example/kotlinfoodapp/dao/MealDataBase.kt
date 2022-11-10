@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.*
 import com.example.kotlinfoodapp.pojo.Meal
 
+
 @Database(entities = [Meal::class], version = 1)
 @TypeConverters(MealTypeConverter::class)
 abstract class MealDataBase:RoomDatabase() {
@@ -22,7 +23,7 @@ abstract class MealDataBase:RoomDatabase() {
                     MealDataBase::class.java,
                     "meal.db"
 
-                ).fallbackToDestructiveMigration().build()
+                ).allowMainThreadQueries().build()
             }
             return INSTANCE as MealDataBase
 
