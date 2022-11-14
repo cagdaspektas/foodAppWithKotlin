@@ -18,6 +18,7 @@ private   var randomMealLiveData= MutableLiveData<Meal>()
     private var popularItemsLiveData=MutableLiveData<List<MealsByCategory>>()
     private var categoryLiveData=MutableLiveData<List<Category>>()
     private var favoritesMealsLiveData=mealDataBase.mealDao().getMeals()
+    private var bottomSheetMealLiveData=MutableLiveData<Meal>()
 
     fun deleteMeal(meal: Meal){
         viewModelScope.launch {
@@ -80,6 +81,23 @@ private   var randomMealLiveData= MutableLiveData<Meal>()
         })
     }
 
+    fun  getMealById(id:String){
+        RetrofitInstance.api.getMealDetails(id).enqueue(object :Callback<MealList>{
+            override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
+                val meal=response.body()?.meals?.first()
+                meal?.let {
+                    meal->
+                    bottomSheetMealLiveData.postValue(meal)
+                }
+            }
+
+            override fun onFailure(call: Call<MealList>, t: Throwable) {
+                Log.e("HomeViewModel", t.message.toString(), )
+            }
+        })
+
+    }
+
 //TODO live data değişemezken muteabe live data değişebilir burdaki fun amacı private olan MutableLiveDatayı dışarıdan okunmayacak hale getirip sadece bu class içinde değiştirmek
     fun observeRandomMealLiveData():LiveData<Meal>{
         return randomMealLiveData
@@ -93,5 +111,6 @@ private   var randomMealLiveData= MutableLiveData<Meal>()
    fun observeFavoritesMealsLiveData():LiveData<List<Meal>>{
         return favoritesMealsLiveData
     }
+    fun observeBottomSheetMealsLiveData():LiveData<Meal> = bottomSheetMealLiveData
 
 }

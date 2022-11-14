@@ -10,6 +10,8 @@ import com.example.kotlinfoodapp.pojo.MealsByCategory
 class MostPopularAdapter():RecyclerView.Adapter<MostPopularAdapter.PopularMealViewHolder>() {
     lateinit var onItemClick:((MealsByCategory)->Unit)
     private var mealList=ArrayList<MealsByCategory>()
+    var onLongClick:((MealsByCategory)->Unit)?=null
+
 
     fun  setMeals(mealList:ArrayList<MealsByCategory>){
         this.mealList=mealList
@@ -26,6 +28,10 @@ class MostPopularAdapter():RecyclerView.Adapter<MostPopularAdapter.PopularMealVi
   Glide.with(holder.itemView).load(mealList[position].strMealThumb).into(holder.binding.imgPopularMealItem)
         holder.itemView.setOnClickListener {
             onItemClick.invoke(mealList[position])
+        }
+        holder.itemView.setOnLongClickListener {
+            onLongClick?.invoke(mealList[position])
+            true
         }
     }
 
